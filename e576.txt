@@ -1,0 +1,61 @@
+class liri:
+  def __init__(self,L,R):
+    self.L = L
+    self.R = R
+T = int(input())
+
+for j in range(T):
+  m = 0
+  LR = []
+  result = []
+  x = input()
+  M = int(input())
+  if M < m:
+    M,m = m,M 
+  k = m
+  while 1:
+    n = list(map(int,input().split()))
+
+    if n[0] == 0 and n[1] == 0:
+      break
+    LR.append(liri(n[0],n[1]))
+
+  LR.sort(key=lambda k:(k.L,k.R))
+
+  for i in range(len(LR)):
+
+    if LR[i].L <= m and LR[i].R >= M:
+      result.append(liri(LR[i].L,LR[i].R))
+      break
+
+    elif LR[i].R <= m:
+      result = []
+
+    elif LR[i].L <= k and LR[i].R >= m:
+      for l in range(len(result)):
+
+        if LR[i].L <= LR[l].L and LR[i].R >= LR[l].R:
+          result.remove(result[l])
+      result.append(liri(LR[i].L,LR[i].R))
+      k = LR[i].R
+
+    else:
+      result = []
+      break
+  
+  if len(result) == 1:
+    
+    if result[0].L <= m and result[0].R >= M:
+      print('1')
+      print(result[0].L,result[0].R)
+    
+    else:
+      print('0')
+  
+  elif len(result) == 0:
+    print('0')
+
+  else:
+    print(len(result))
+    for i in range(len(result)):
+      print(result[i].L,result[i].R)
